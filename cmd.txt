@@ -1,0 +1,13 @@
+# Create virtual environment(venv)
+
+# MBTiles Extractor
+# This will extract mbtiles to TMS folder of (.pbf, .png, .jpg)
+python convert.py path to .mbtiles
+
+######################################################
+
+# commands for vector tile and append
+python tiles2gpkg_parallel.py -srs 4326 -imagery vt D:\TMG\tasks\sample_data\MVT\multi_layers_test D:\TMG\tasks\sample_data\MVT\multi_layers_test.gpkg
+# append in gpkg
+python tiles2gpkg_parallel.py -srs 4326 -table_name raster_table -a true D:\TMG\tasks\sample_data\MVT\rgb_tiles\geodetic D:\TMG\tasks\sample_data\MVT\multi_layers_test.gpkg
+
