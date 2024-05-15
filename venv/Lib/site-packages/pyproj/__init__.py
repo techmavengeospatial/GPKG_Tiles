@@ -1,0 +1,121 @@
+"""
+Python interface to PROJ (https://proj.org),
+cartographic projections and coordinate transformations library.
+
+Download: http://python.org/pypi/pyproj
+
+Requirements: Python 3.9+.
+
+Contact:  Jeffrey Whitaker <jeffrey.s.whitaker@noaa.gov>
+
+Copyright (c) 2006-2018, Jeffrey Whitaker.
+Copyright (c) 2019-2023, Open source contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"""
+
+
+# start delvewheel patch
+def _delvewheel_patch_1_5_1():
+    import ctypes
+    import os
+    import platform
+    import sys
+    libs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'pyproj.libs'))
+    is_conda_cpython = platform.python_implementation() == 'CPython' and (hasattr(ctypes.pythonapi, 'Anaconda_GetVersion') or 'packaged by conda-forge' in sys.version)
+    if sys.version_info[:2] >= (3, 8) and not is_conda_cpython or sys.version_info[:2] >= (3, 10):
+        if os.path.isdir(libs_dir):
+            os.add_dll_directory(libs_dir)
+    else:
+        load_order_filepath = os.path.join(libs_dir, '.load-order-pyproj-3.6.1')
+        if os.path.isfile(load_order_filepath):
+            with open(os.path.join(libs_dir, '.load-order-pyproj-3.6.1')) as file:
+                load_order = file.read().split()
+            for lib in load_order:
+                lib_path = os.path.join(os.path.join(libs_dir, lib))
+                if os.path.isfile(lib_path) and not ctypes.windll.kernel32.LoadLibraryExW(ctypes.c_wchar_p(lib_path), None, 0x00000008):
+                    raise OSError('Error loading {}; {}'.format(lib, ctypes.FormatError()))
+
+
+_delvewheel_patch_1_5_1()
+del _delvewheel_patch_1_5_1
+# end delvewheel patch
+
+import warnings
+
+import pyproj.network
+from pyproj._datadir import (  # noqa: F401 pylint: disable=unused-import
+    _pyproj_global_context_initialize,
+    set_use_global_context,
+)
+from pyproj._show_versions import (  # noqa: F401 pylint: disable=unused-import
+    show_versions,
+)
+from pyproj.crs import CRS  # noqa: F401 pylint: disable=unused-import
+from pyproj.database import (  # noqa: F401 pylint: disable=unused-import
+    get_authorities,
+    get_codes,
+    get_units_map,
+)
+from pyproj.exceptions import (  # noqa: F401 pylint: disable=unused-import
+    DataDirError,
+    ProjError,
+)
+from pyproj.geod import (  # noqa: F401 pylint: disable=unused-import
+    Geod,
+    geodesic_version_str,
+    pj_ellps,
+)
+from pyproj.list import (  # noqa: F401 pylint: disable=unused-import
+    get_ellps_map,
+    get_prime_meridians_map,
+    get_proj_operations_map,
+)
+from pyproj.proj import Proj, pj_list  # noqa: F401 pylint: disable=unused-import
+from pyproj.transformer import (  # noqa: F401 pylint: disable=unused-import
+    Transformer,
+    itransform,
+    proj_version_str,
+    transform,
+)
+
+__version__ = "3.6.1"
+__all__ = [
+    "Proj",
+    "Geod",
+    "CRS",
+    "Transformer",
+    "transform",
+    "itransform",
+    "pj_ellps",
+    "pj_list",
+    "get_ellps_map",
+    "get_prime_meridians_map",
+    "get_proj_operations_map",
+    "get_units_map",
+    "show_versions",
+]
+__proj_version__ = proj_version_str
+
+
+try:
+    _pyproj_global_context_initialize()
+except DataDirError as err:
+    warnings.warn(str(err))
+
+pyproj.network.set_ca_bundle_path()

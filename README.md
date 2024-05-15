@@ -1,135 +1,93 @@
 # TMG_GeoPackage-VectorTiles_python_automation
-This solution builds OGC GPKG GeoPackage Map Tiles
-- Raster Tiles
-- Heightmap PNG Elevation-Terrain Tiles
-- Vector Tiles
-
-it accepts TMS Folder of Tiles as the input/source
-please extract MBTILES or PMTILES to folder of tiles if those are your inputs.
-
 
 This solution builds OGC GPKG GeoPackage Map Tiles
 
-Supported Input Tiles
+## Supported Input Tiles
 
-Raster Tiles PNG/JPEG
+> **Raster Tiles PNG/JPEG**
 
+> **Heightmap**
 
-Heightmap
+> **PNG Elevation-Terrain Tiles**
 
-
-PNG Elevation-Terrain Tiles
-
-
-Vector Tiles
+> **Vector Tiles**
 
 It accepts MBTILES as your input and stores that into gpkg as seperate table/layer.
 
-Please see our Commercial Offerings (Windows Apps)
-Tile Utilities
+## Please see our Commercial Offerings (Windows Apps)
 
-https://portfolio.techmaven.net/apps/tile-utilities/
+**Tile Utilities**
 
-Map Tiling
+> https://portfolio.techmaven.net/apps/tile-utilities/
 
-https://maptiling.techmaven.net/
+**Map Tiling**
 
+> https://maptiling.techmaven.net/
 
-Geospatial Data Serving
+## Geospatial Data Serving
 
-https://geodataserver.techmaven.net/
+> https://geodataserver.techmaven.net/
 
+> https://tileserver.techmaven.net/
 
-https://tileserver.techmaven.net/
+## Mobile Apps
 
+**We also have mobile apps that work with GeoPackage**
 
-Mobile Apps
-We also have mobile apps that work with GeoPackage
+> https://portfolio.techmaven.net/apps/
 
-https://portfolio.techmaven.net/apps/
+> https://mapexplorer.techmaven.net/
 
+> https://earthexplorer.techmaven.net/
 
-https://mapexplorer.techmaven.net/
+> https://mapdiscovery.techmaven.net/
 
+> https://geonamesmapexplorer.techmaven.net/
 
-https://earthexplorer.techmaven.net/
+> https://geodatacollector.techmaven.net
 
+## Getting Started
 
-https://mapdiscovery.techmaven.net/
+1. Options to use the command line tool
 
+   - -h, --help show this help message and exit
 
-https://geonamesmapexplorer.techmaven.net/
+   - -i INPUT, --input=INPUT Input path of mbtiles
 
+   - -o OUTPUT, --output=OUTPUT Output path of gpkg
 
-https://geodatacollector.techmaven.net
+   - -p PROJECTION, --proj=PROJECTION ie. 3395/3857/4326
 
+   - -r RESOURCE, --resource=RESOURCE Directory path of resources folder
 
-Getting Started
+   - -t TABLE, --table=TABLE Table name in geopackage
 
+## Example
 
-Options to use the command line tool
+`--proj possible values can be 3395 3957 4326`
 
+**3395 Projection**
 
--h, --help show this help message and exit
+> python tiles_to_rbt_gpkg.py --input "input file path of mbtiles" --output "output gpkg path" --proj 3395 --resource "Resource folder directory path" --table "tbl_hillshades"
 
+**3857 Projection**
 
--i INPUT, --input=INPUT Input path of mbtiles
+> python tiles_to_rbt_gpkg.py --input "input file path of mbtiles" --output "output gpkg path" --proj 3857 --resource "Resource folder directory path" --table "tbl_cultural"
 
+**4326 Projection**
 
--o OUTPUT, --output=OUTPUT Output path of gpkg
+> python tiles_to_rbt_gpkg.py --input "input file path of mbtiles" --output "output gpkg path" --proj 4326 --resource "Resource folder directory path" --table "tbl_physical"
 
+## Dependencies
 
--p PROJECTION, --proj=PROJECTION ie. 3395/3857/4326
+`optparse`
 
+> pip install optparse
 
--r RESOURCE, --resource=RESOURCE Directory path of resources folder
+`pyproj`
 
+> pip install pyproj
 
--t TABLE, --table=TABLE Table name in geopackage
+`sqlite3`
 
-
-
-
-
-Example
---proj possible values can be 3395 3957 4326
-
-python tiles_to_rbt_gpkg.py --input "input file path of mbtiles" --output "output gpkg path" --proj 3395 --resource "Resource folder directory path" --table "tbl_hillshades"
-
-
-python tiles_to_rbt_gpkg.py --input "input file path of mbtiles" --output "output gpkg path" --proj 3857 --resource "Resource folder directory path" --table "tbl_cultural"
-
-
-python tiles_to_rbt_gpkg.py --input "input file path of mbtiles" --output "output gpkg path" --proj 4326 --resource "Resource folder directory path" --table "tbl_physical"
-
-
-Dependencies
-optparse
-
-pip install optparse
-
-pyproj
-
-pip install pyproj
-
-sqlite3
-
-pip instal sqlite3
-
-Please see our Commercial Offerings (Windows Apps)
-Tile Utilities
-https://portfolio.techmaven.net/apps/tile-utilities/
-Map Tiling https://maptiling.techmaven.net/
-
-Geospatial Data Serving
-https://geodataserver.techmaven.net/
-https://tileserver.techmaven.net/
-
-We also have mobile apps that work with GeoPackage
-https://portfolio.techmaven.net/apps/
-https://mapexplorer.techmaven.net/
-https://earthexplorer.techmaven.net/
-https://mapdiscovery.techmaven.net/
-https://geonamesmapexplorer.techmaven.net/
-https://geodatacollector.techmaven.net
-
+> pip instal sqlite3
