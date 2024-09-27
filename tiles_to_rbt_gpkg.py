@@ -23,7 +23,7 @@ class mbtilesProvider():
         self.getMetadata()
     def getTiles(self):
         conn = sqlite3.connect(self.tilePath)
-        cursor = conn.execute("SELECT zoom_level, tile_column, tile_row, tile_data from tiles")
+        cursor = conn.execute("SELECT DISTINCT zoom_level, tile_column, tile_row, tile_data from tiles")
         for row in cursor:
             tile = {"zoom_level": row[0], "tile_column": row[1], "tile_row": row[2], "tile_data": row[3]}
             self.tiles.append(tile)
@@ -224,17 +224,17 @@ class gpkgProvider():
         if (minZoom == -1 or (minZoom <= 13 and 13 <= maxZoom)):
             conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,13,8192,8192,256,256,19.1092570712941,19.1092570712941,{top},{left},68247.3466831931);")
         if (minZoom == -1 or (minZoom <= 14 and 14 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,14,16384,16384,256,256,4.777314267823525,4.777314267823525,{top},{left},34,123.67334159644);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,14,16384,16384,256,256,4.777314267823525,4.777314267823525,{top},{left},34123.67334159644);")
         if (minZoom == -1 or (minZoom <= 15 and 15 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,15,32768,32768,256,256,2.388657133911763,2.388657133911763,{top},{left},17,061.83667079822);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,15,32768,32768,256,256,2.388657133911763,2.388657133911763,{top},{left},17061.83667079822);")
         if (minZoom == -1 or (minZoom <= 16 and 16 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,16,65536,65536,256,256,1.194328566955881,1.194328566955881,{top},{left},8,530.918335399109);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,16,65536,65536,256,256,1.194328566955881,1.194328566955881,{top},{left},8530.918335399109);")
         if (minZoom == -1 or (minZoom <= 17 and 17 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,17,131072,131072,256,256,0.5971642834779406,0.5971642834779406,{top},{left},4,265.459167699554);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,17,131072,131072,256,256,0.5971642834779406,0.5971642834779406,{top},{left},4265.459167699554);")
         if (minZoom == -1 or (minZoom <= 18 and 18 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,18,262144,262144,256,256,0.2985821417389703,0.2985821417389703,{top},{left},2,132.729583849777);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,18,262144,262144,256,256,0.2985821417389703,0.2985821417389703,{top},{left},2132.729583849777);")
         if (minZoom == -1 or (minZoom <= 19 and 19 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,19,8192,8192,256,256,0.1492910708694852,0.1492910708694852,{top},{left},1,066.364791924889);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,19,8192,8192,256,256,0.1492910708694852,0.1492910708694852,{top},{left},1066.364791924889);")
         if (minZoom == -1 or (minZoom <= 20 and 20 <= maxZoom)):
             conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,20,524288,524288,256,256,0.0746455354347426,0.0746455354347426,{top},{left},533.1823959624443);")
         conn.commit()
@@ -284,33 +284,38 @@ class gpkgProvider():
         conn = sqlite3.connect(self.TilePath)
         json_object = json.loads(styleJSON)
         vector_layers = json_object["vector_layers"]
-        tilestats_layers = json_object["tilestats"]["layers"]
-        for layer in vector_layers:
-            name = layer["id"]
-            description = layer["description"]
-            minzoom = layer["minzoom"]
-            maxzoom = layer["maxzoom"]
-            for tile_stat in tilestats_layers:
-                geometry = "unknown"
-                if (tile_stat["layer"] == name):
-                    geometry = tile_stat["geometry"]
-                    geometry_dimension = 'null'
-                    if (geometry.lower() == "point" or geometry.lower() == "multipoint"):
-                        geometry_dimension = "0"
-                    elif (geometry.lower() == "linestring" or geometry.lower() == "multilinestring"):
-                        geometry_dimension = "1"
-                    elif (geometry.lower() == "polygon" or geometry.lower() == "multipolygon"):
-                        geometry_dimension = "2"
-                    conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_vt_layers\" (\"table_name\",\"name\",\"description\",\"minzoom\",\"maxzoom\",\"attributes_table_name\",\"geometry_dimension\") VALUES ('{self.Table_Name}','{name}','{description}','{minzoom}','{maxzoom}',NULL,'{geometry_dimension}');")
-                    conn.commit()
-                    layer_id = self.executeSQL(f"SELECT id FROM gpkgext_vt_layers WHERE table_name = '{self.Table_Name}' AND name = '{name}' AND maxzoom = '{maxzoom}'",
-                        "layer_id")[0]["layer_id"]
-                    for attribute in tile_stat["attributes"]:
-                        attr = attribute["attribute"]
-                        type = attribute["type"]
-                        conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_vt_fields\" (\"layer_id\",\"name\",\"type\") VALUES ({layer_id},'{attr}','{type.capitalize()}');")
+        if "tilestats" in vector_layers:
+            tilestats_layers = json_object["tilestats"]["layers"]
+            for layer in vector_layers:
+                name = layer["id"]
+                description = layer["description"]
+                minzoom = layer["minzoom"]
+                maxzoom = layer["maxzoom"]
+                for tile_stat in tilestats_layers:
+                    geometry = "unknown"
+                    if (tile_stat["layer"] == name):
+                        geometry = tile_stat["geometry"]
+                        geometry_dimension = 'null'
+                        if (geometry.lower() == "point" or geometry.lower() == "multipoint"):
+                            geometry_dimension = "0"
+                        elif (geometry.lower() == "linestring" or geometry.lower() == "multilinestring"):
+                            geometry_dimension = "1"
+                        elif (geometry.lower() == "polygon" or geometry.lower() == "multipolygon"):
+                            geometry_dimension = "2"
+                        conn.execute(
+                            f"INSERT OR IGNORE INTO \"gpkgext_vt_layers\" (\"table_name\",\"name\",\"description\",\"minzoom\",\"maxzoom\",\"attributes_table_name\",\"geometry_dimension\") VALUES ('{self.Table_Name}','{name}','{description}','{minzoom}','{maxzoom}',NULL,'{geometry_dimension}');")
                         conn.commit()
-
+                        layer_id = self.executeSQL(
+                            f"SELECT id FROM gpkgext_vt_layers WHERE table_name = '{self.Table_Name}' AND name = '{name}' AND maxzoom = '{maxzoom}'",
+                            "layer_id")[0]["layer_id"]
+                        for attribute in tile_stat["attributes"]:
+                            attr = attribute["attribute"]
+                            type = attribute["type"]
+                            conn.execute(
+                                f"INSERT OR IGNORE INTO \"gpkgext_vt_fields\" (\"layer_id\",\"name\",\"type\") VALUES ({layer_id},'{attr}','{type.capitalize()}');")
+                            conn.commit()
+        else:
+            print("tilestats not found in metadata JSON")
         conn.commit()
         conn.close()
 
@@ -870,7 +875,7 @@ def main():
     parser.add_option("-i", "--input", default="", dest="input", help="Input path of mbtiles")
     parser.add_option("-o", "--output", default="", dest="output", help="Output path of gpkg")
     parser.add_option("-p", "--proj", default=3857, dest="projection", help="ie. 3395/3857/4326")
-    parser.add_option("-r", "--resource", default="./RBT_Resources", dest="resource", help="Directory path of resources folder")
+    parser.add_option("-r", "--resource", default="", dest="resource", help="Directory path of resources folder")
     parser.add_option("-t", "--table", default="tiles", dest="table", help="Table name in geopackage")
 
     (options, args) = parser.parse_args()
