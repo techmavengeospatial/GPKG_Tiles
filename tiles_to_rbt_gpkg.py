@@ -196,9 +196,9 @@ class gpkgProvider():
             left = 180
 
         if (minZoom == -1 or (minZoom <= 0 and 0 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,0,4,4,256,256,156543.0339280408,156543.0339280408,{top},{left},559082264.028718);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,0,1,1,256,256,156543.0339280408,156543.0339280408,{top},{left},559082264.028718);")
         if (minZoom == -1 or (minZoom <= 1 and 1 <= maxZoom)):
-            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,1,4,4,256,256,78271.5169640204,78271.5169640204,{top},{left},279541132.014359);")
+            conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,1,2,2,256,256,78271.5169640204,78271.5169640204,{top},{left},279541132.014359);")
         if (minZoom == -1 or (minZoom <= 2 and 2 <= maxZoom)):
             conn.execute(f"INSERT OR IGNORE INTO \"gpkgext_tile_matrix\" (\"tms_id\",\"zoom_level\",\"matrix_width\",\"matrix_height\",\"tile_width\",\"tile_height\",\"pixel_x_size\",\"pixel_y_size\",\"top\",\"left\",\"scale_denominator\") VALUES (1,2,4,4,256,256,39135.7584820102,39135.7584820102,{top},{left},139770566.007179);")
         if (minZoom == -1 or (minZoom <= 3 and 3 <= maxZoom)):
