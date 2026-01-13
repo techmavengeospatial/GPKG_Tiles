@@ -71,7 +71,8 @@ class gpkgProvider():
         conn.execute("PRAGMA application_id = 0x47504B47;")
         # Set user_version to Geopackage version 1.3.1, by setting 10301 in HEX (https://docs.ogc.org/is/12-128r17/12-128r17.html#_file_format)
         conn.execute("PRAGMA user_version = 0x0000283C;")
-        conn.execute("PRAGMA autovacuum=FULL;")
+        conn.execute("PRAGMA auto_vacuum = FULL")
+        conn.execute("VACUUM;")
 
         conn.execute("CREATE TABLE IF NOT EXISTS \"gpkg_contents\" (\"table_name\"TEXT NOT NULL,\"data_type\"TEXT NOT NULL,\"identifier\"TEXT UNIQUE,\"description\"TEXT DEFAULT '',\"last_change\"DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),\"min_x\"DOUBLE,\"min_y\"DOUBLE,\"max_x\"DOUBLE,\"max_y\"DOUBLE,\"srs_id\"INTEGER,\"preparedby\" TEXT NOT NULL DEFAULT 'Tech Maven Geospatial, LLC',PRIMARY KEY(\"table_name\"),CONSTRAINT \"fk_gc_r_srs_id\" FOREIGN KEY(\"srs_id\") REFERENCES \"gpkg_spatial_ref_sys\"(\"srs_id\"))")
         conn.execute("CREATE TABLE IF NOT EXISTS \"gpkg_spatial_ref_sys\" (\"srs_name\"TEXT NOT NULL,\"srs_id\"INTEGER NOT NULL,\"organization\"TEXT NOT NULL,\"organization_coordsys_id\"INTEGER NOT NULL,\"definition\"TEXT NOT NULL,\"description\"TEXT,PRIMARY KEY(\"srs_id\"))")
