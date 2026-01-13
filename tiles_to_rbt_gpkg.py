@@ -10,6 +10,9 @@ import time
 import  math
 from optparse import OptionParser
 
+sqlite3.register_adapter(datetime.datetime, lambda d: d.isoformat())
+
+
 def getRandomString(length):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
 
