@@ -100,19 +100,19 @@ class gpkgProvider():
     def insertSpatialRefSys(self, path):
         conn = sqlite3.connect(path)
 
-        srs_name = "Undefined cartesian SRS"
-        organization = "NONE"
-        organization_coordsys_id = "-1"
-        definition = "undefined"
-        description = "undefined cartesian coordinate reference system"
-        conn.execute(f"INSERT OR IGNORE into gpkg_spatial_ref_sys(srs_name, srs_id, organization, organization_coordsys_id, definition, description) VALUES ('{srs_name}', '-1', '{organization}', '{organization_coordsys_id}', '{definition}', '{description}')")
+        # srs_name = "Undefined cartesian SRS"
+        # organization = "NONE"
+        # organization_coordsys_id = "-1"
+        # definition = "undefined"
+        # description = "undefined cartesian coordinate reference system"
+        # conn.execute(f"INSERT OR IGNORE into gpkg_spatial_ref_sys(srs_name, srs_id, organization, organization_coordsys_id, definition, description) VALUES ('{srs_name}', '-1', '{organization}', '{organization_coordsys_id}', '{definition}', '{description}')")
 
-        srs_name = "Undefined geographic SRS"
-        organization = "NONE"
-        organization_coordsys_id = "0"
-        definition = "undefined"
-        description = "undefined geographic coordinate reference system"
-        conn.execute(f"INSERT OR IGNORE into gpkg_spatial_ref_sys(srs_name, srs_id, organization, organization_coordsys_id, definition, description) VALUES('{srs_name}', '0', '{organization}', '{organization_coordsys_id}', '{definition}', '{description}')")
+        # srs_name = "Undefined geographic SRS"
+        # organization = "NONE"
+        # organization_coordsys_id = "0"
+        # definition = "undefined"
+        # description = "undefined geographic coordinate reference system"
+        # conn.execute(f"INSERT OR IGNORE into gpkg_spatial_ref_sys(srs_name, srs_id, organization, organization_coordsys_id, definition, description) VALUES('{srs_name}', '0', '{organization}', '{organization_coordsys_id}', '{definition}', '{description}')")
 
         srs_name = "WGS 84 / Pseudo-Mercator"
         organization = "EPSG"
