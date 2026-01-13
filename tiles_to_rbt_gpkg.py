@@ -232,18 +232,18 @@ class gpkgProvider():
 
         for zoom in range(21):
             if (minZoom == -1 or (minZoom <= zoom and zoom <= maxZoom)):
-                matrix_width = 2**(zoom + 1)
-                matrix_height = 2**(zoom)
-                if (projection == "4326"):
-                    sql= f"""
-                        INSERT OR IGNORE INTO gpkgext_tile_matrix (tms_id,zoom_level,matrix_width,matrix_height,tile_width,tile_height,pixel_x_size,pixel_y_size,top,left,scale_denominator)
-                        VALUES (1,{zoom},{matrix_width},{matrix_height},{tile_size},{tile_size},{pixel_size[zoom]},{pixel_size[zoom]},{top},{left},{scale_denom[zoom]});
-                    """
-                else: 
-                    sql = f"""
-                        INSERT OR IGNORE INTO gpkgext_tile_matrix (tms_id,zoom_level,matrix_width,matrix_height,tile_width,tile_height,pixel_x_size,pixel_y_size,top,left,scale_denominator)
-                        VALUES (1,{zoom},{matrix_width},{matrix_height},{tile_size},{tile_size},{pixel_size[zoom]},{pixel_size[zoom]},{top},{left},{scale_denom[zoom]});
-                    """
+                if (projection == "3857"):
+                    matrix_width = 2**(zoom)
+                    matrix_height = 2**(zoom)
+                elif (projection == "4326"):
+                    matrix_width = 2**(zoom + 1)
+                    matrix_height = 2**(zoom)
+                else:
+                    raise Exception('projection not supported')
+                sql = f"""
+                    INSERT OR IGNORE INTO gpkgext_tile_matrix (tms_id,zoom_level,matrix_width,matrix_height,tile_width,tile_height,pixel_x_size,pixel_y_size,top,left,scale_denominator)
+                    VALUES (1,{zoom},{matrix_width},{matrix_height},{tile_size},{tile_size},{pixel_size[zoom]},{pixel_size[zoom]},{top},{left},{scale_denom[zoom]});
+                """
                 conn.execute(sql)
         conn.commit()
         conn.close()
