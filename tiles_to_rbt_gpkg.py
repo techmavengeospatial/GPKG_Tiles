@@ -257,7 +257,7 @@ class gpkgProvider():
         if (projection == "3395"):
             conn.execute("INSERT OR IGNORE INTO \"gpkgext_tile_matrix_set\" (\"tms\",\"description\",\"uri\",\"srs_id\",\"min_x\",\"min_y\",\"max_x\",\"max_y\") VALUES ('WorldMercatorWGS84Quad','WorldMercatorWGS84Quad','WorldMercatorWGS84Quad',3395,-20037508.3427892,-20037508.3426841,20037508.3427892,20037508.3426841);")
         elif (projection == "3857"):
-            conn.execute("INSERT OR IGNORE INTO \"gpkgext_tile_matrix_set\" (\"tms\",\"uri\",\"srs_id\",\"min_x\",\"min_y\",\"max_x\",\"max_y\") VALUES ('EPSG:3857','epsg3857',3857,-20037508.3427892,-20048966.1040146,20037508.3427892,20048966.1040146);")
+            conn.execute("INSERT OR IGNORE INTO \"gpkgext_tile_matrix_set\" (\"tms\",\"uri\",\"srs_id\",\"min_x\",\"min_y\",\"max_x\",\"max_y\") VALUES ('EPSG:3857','epsg3857',3857,-20037508.3427892,-20037508.3427892,20037508.3427892,20037508.3427892);")
         elif (projection == "4326"):
             conn.execute("INSERT OR IGNORE INTO \"gpkgext_tile_matrix_set\" (\"tms\",\"uri\",\"srs_id\",\"min_x\",\"min_y\",\"max_x\",\"max_y\") VALUES ('EPSG:4326','epsg4326',4326,-180,-90,180,90);")
         conn.commit()
