@@ -273,11 +273,17 @@ class gpkgProvider():
         conn.commit()
         conn.close()
 
-    def insertGPKGTiles(self, tiles):
+    def insertGPKGTiles(self, tiles, projection = None):
         conn = sqlite3.connect(self.TilePath)
-        for tile in tiles:
-            conn.execute(f"INSERT OR IGNORE INTO \"{self.Table_Name}\" (zoom_level, tile_column, tile_row, tile_data) VALUES (?,?,?,?)",
-                         (tile['zoom_level'], tile['tile_column'], (math.pow(2, tile['zoom_level']) -1 - tile['tile_row']), tile['tile_data']))
+        if (projection == "4326"):
+            for tile in tiles:
+                conn.execute(f"INSERT OR IGNORE INTO \"{self.Table_Name}\" (zoom_level, tile_column, tile_row, tile_data) VALUES (?,?,?,?)",
+                             (tile['zoom_level']-1, tile['tile_column'], (math.pow(2, tile['zoom_level']) -1 - tile['tile_row']), tile['tile_data']))
+
+        else:
+            for tile in tiles:
+                conn.execute(f"INSERT OR IGNORE INTO \"{self.Table_Name}\" (zoom_level, tile_column, tile_row, tile_data) VALUES (?,?,?,?)",
+                             (tile['zoom_level'], tile['tile_column'], (math.pow(2, tile['zoom_level']) -1 - tile['tile_row']), tile['tile_data']))
         conn.commit()
         conn.close()
 
@@ -922,7 +928,7 @@ def main():
             gpkg.insertGPKGSymbols()
         else:
             gpkg = gpkgProvider(options.output, format.lower(), options.table, options.projection, False)
-            gpkg.insertGPKGTiles(mbtiles.tiles)
+            gpkg.insertGPKGTiles(mbtiles.tiles, options.projection)
             gpkg.updateGPKGContent(description, gpkg_bounds, options.projection)
             gpkg.insertGPKGSAReference()
         end = time.time()
