@@ -275,15 +275,15 @@ class gpkgProvider():
 
     def insertGPKGTiles(self, tiles, projection = None):
         conn = sqlite3.connect(self.TilePath)
-        if (projection == "4326"):
-            for tile in tiles:
-                conn.execute(f"INSERT OR IGNORE INTO \"{self.Table_Name}\" (zoom_level, tile_column, tile_row, tile_data) VALUES (?,?,?,?)",
-                             (tile['zoom_level']-1, tile['tile_column'], (math.pow(2, tile['zoom_level']) -1 - tile['tile_row']), tile['tile_data']))
 
-        else:
-            for tile in tiles:
+        for tile in tiles:
+            zoom = tile['zoom_level']
+            if (projection == "4326"):
+                zoom = zoom - 1
+            if zoom >= 0:
+                tile_row = (math.pow(2, tile['zoom_level']) -1 - tile['tile_row'])
                 conn.execute(f"INSERT OR IGNORE INTO \"{self.Table_Name}\" (zoom_level, tile_column, tile_row, tile_data) VALUES (?,?,?,?)",
-                             (tile['zoom_level'], tile['tile_column'], (math.pow(2, tile['zoom_level']) -1 - tile['tile_row']), tile['tile_data']))
+                             (zoom, tile['tile_column'], tile_row, tile['tile_data']))
         conn.commit()
         conn.close()
 
