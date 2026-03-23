@@ -45,6 +45,72 @@ class mbtilesProvider():
         conn.close()
         return response
 
+class pmtilesProvider():
+    tilePath = ""
+    tiles = []
+    metadata = []
+    _db = None
+
+    def __init__(self, path):
+        self.tilePath = path
+        self.tiles = []
+        self.metadata = []
+        self._loadData()
+        self._buildMemoryDB()
+
+    def _loadData(self):
+        from pmtiles.reader import Reader, MmapSource, all_tiles
+        from pmtiles.tile import TileType
+
+        tile_type_map = {1: 'pbf', 2: 'png', 3: 'jpg', 4: 'webp', 5: 'avif'}
+
+        with open(self.tilePath, 'rb') as f:
+            source = MmapSource(f)
+            r = Reader(source)
+            header = r.header()
+
+            format_str = tile_type_map.get(header['tile_type'].value, 'unknown')
+            self.metadata.append({'name': 'format', 'value': format_str})
+
+            try:
+                meta_json = r.metadata()
+                if meta_json:
+                    for key in ['name', 'description']:
+                        if key in meta_json:
+                            self.metadata.append({'name': key, 'value': meta_json[key]})
+                    if 'vector_layers' in meta_json or format_str == 'pbf':
+                        self.metadata.append({'name': 'json', 'value': json.dumps(meta_json)})
+            except Exception:
+                pass
+
+            for (z, x, y), tile_data in all_tiles(source):
+                tms_row = (1 << z) - 1 - y
+                self.tiles.append({
+                    'zoom_level': z,
+                    'tile_column': x,
+                    'tile_row': tms_row,
+                    'tile_data': tile_data
+                })
+
+    def _buildMemoryDB(self):
+        self._db = sqlite3.connect(':memory:')
+        self._db.execute("CREATE TABLE tiles (zoom_level INTEGER, tile_column INTEGER, tile_row INTEGER)")
+        self._db.execute("CREATE TABLE metadata (name TEXT, value TEXT)")
+        for t in self.tiles:
+            self._db.execute("INSERT INTO tiles VALUES (?,?,?)",
+                             (t['zoom_level'], t['tile_column'], t['tile_row']))
+        for m in self.metadata:
+            self._db.execute("INSERT INTO metadata VALUES (?,?)", (m['name'], m['value']))
+        self._db.commit()
+
+    def executeSQL(self, query, key_name):
+        cursor = self._db.execute(query)
+        response = []
+        for row in cursor:
+            response.append({key_name: row[0]})
+        return response
+
+
 class gpkgProvider():
     TilePath = ""
     Format = ""
@@ -872,7 +938,7 @@ class gpkgProvider():
 
 def main():
     parser = OptionParser()
-    parser.add_option("-i", "--input", default="", dest="input", help="Input path of mbtiles")
+    parser.add_option("-i", "--input", default="", dest="input", help="Input path of mbtiles or pmtiles")
     parser.add_option("-o", "--output", default="", dest="output", help="Output path of gpkg")
     parser.add_option("-p", "--proj", default=3857, dest="projection", help="ie. 3395/3857/4326")
     parser.add_option("-r", "--resource", default="", dest="resource", help="Directory path of resources folder")
@@ -882,7 +948,10 @@ def main():
 
     if (os.path.exists(options.input)):
         start = time.time()
-        mbtiles = mbtilesProvider(options.input)
+        if options.input.lower().endswith('.pmtiles'):
+            mbtiles = pmtilesProvider(options.input)
+        else:
+            mbtiles = mbtilesProvider(options.input)
 
         # Getting Mbtiles Bounds
 
@@ -934,7 +1003,7 @@ def main():
         end = time.time()
         print(f"Time taken to run the code was {end - start} seconds")
     else:
-        print("Unable to execute, mbtile doesnot esist")
+        print("Unable to execute, input file does not exist")
 
 def getGPKGBounds(min_z, max_z, min_x, max_x, min_y, max_y, center_x, center_y, projection):
     if(projection == "3395"):
